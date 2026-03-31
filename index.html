@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Planning Réservations</title>
+<style>
+body {
+  font-family: Arial;
+  background: #4b0082;
+  color: white;
+  padding-bottom: 50px;
+}
+
+table {
+  width: 95%;
+  margin: auto;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid white;
+  text-align: center;
+  padding: 10px;
+}
+
+th {
+  background: #7a1cff;
+}
+
+.heure {
+  background: #2c003e;
+}
+
+.reserve {
+  background: #e74c3c;
+}
+
+.dispo {
+  background: #2ecc71;
+}
+
+.cell {
+  cursor: pointer;
+  min-width: 120px;
+  outline: none;
+}
+
+.cell:focus {
+  background: #5dade2 !important;
+  color: black;
+}
+
+/* Style pour la zone de texte en bas */
+.notes-container {
+  width: 95%;
+  margin: 30px auto;
+  text-align: left;
+}
+
+textarea {
+  width: 100%;
+  height: 150px;
+  margin-top: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  border: 2px solid #7a1cff;
+  background: #2c003e;
+  color: white;
+  font-family: Arial;
+  font-size: 14px;
+  resize: vertical; /* Permet d'agrandir la zone de haut en bas */
+}
+
+label {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+</style>
+</head>
+<body>
+
+<h1 style="text-align:center;">Planning Réservations Avril</h1>
+<p style="text-align:center; font-size: 0.9em;">(Clic gauche : État | Clic droit : Modifier le nom)</p>
+
+<table>
+<tr>
+  <th>Heure</th>
+  <th>10 Avr</th>
+  <th>11 Avr</th>
+  <th>12 Avr</th>
+  <th>13 Avr</th>
+  <th>14 Avr</th>
+  <th>15 Avr</th>
+  <th>16 Avr</th>
+  <th>17 Avr</th>
+  <th>18 Avr</th>
+  <th>19 Avr</th>
+</tr>
+
+<script>
+function toggle(cell) {
+  if (cell.classList.contains("reserve")) {
+    cell.classList.remove("reserve");
+    cell.classList.add("dispo");
+    cell.textContent = "Disponible";
+  } else {
+    cell.classList.remove("dispo");
+    cell.classList.add("reserve");
+    cell.textContent = "Réservé";
+  }
+}
+
+function edit(e, cell) {
+  e.preventDefault();
+  cell.contentEditable = "true";
+  cell.focus();
+  
+  cell.onblur = function() {
+    cell.contentEditable = "false";
+  };
+}
+
+for (let h = 8; h <= 18; h++) {
+  document.write("<tr>");
+  document.write('<td class="heure">' + h + 'h</td>');
+
+  for (let d = 10; d <= 19; d++) {
+    let etat = (d <= 17) ? 'reserve' : 'dispo';
+    let texte = (d <= 17) ? 'Réservé' : 'Disponible';
+    
+    document.write(`<td class="${etat} cell" 
+                        onclick="toggle(this)" 
+                        oncontextmenu="edit(event, this)">${texte}</td>`);
+  }
+
+  document.write("</tr>");
+}
+</script>
+</table>
+
+<div class="notes-container">
+  <label for="reservations-notes">📝 Notes & Numéros de réservation :</label>
+  <textarea id="reservations-notes" placeholder="Exemple : 10 Avril 08h - N°001 (M. Durand)..."></textarea>
+</div>
+
+</body>
+</html>
