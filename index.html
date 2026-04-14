@@ -51,7 +51,6 @@ th {
   color: black;
 }
 
-/* Style pour la zone de texte en bas */
 .notes-container {
   width: 95%;
   margin: 30px auto;
@@ -85,7 +84,8 @@ label {
 
 <table>
 <tr>
-  <th>Code</th> <th>10 Avr</th>
+  <th>Chambre / Code</th>
+  <th>10 Avr</th>
   <th>11 Avr</th>
   <th>12 Avr</th>
   <th>13 Avr</th>
@@ -120,18 +120,18 @@ function edit(e, cell) {
   };
 }
 
-// Boucle de 8h à 18h
-for (let h = 8; h <= 18; h++) {
+// On fait monter la boucle jusqu'à 19 pour avoir toutes les lignes
+for (let h = 8; h <= 19; h++) {
   document.write("<tr>");
   
-  // Logique pour transformer l'heure en numéro personnalisé
   let numeroAffiche;
-  if (h < 13) {
-    // De 8h à 12h -> de 100 à 104
+  // Si h est entre 8 et 13 -> codes 100 à 105
+  if (h <= 13) {
     numeroAffiche = 100 + (h - 8);
-  } else {
-    // De 13h à 18h -> de 200 à 205
-    numeroAffiche = 200 + (h - 13);
+  } 
+  // Si h est entre 14 et 19 -> codes 200 à 205
+  else {
+    numeroAffiche = 200 + (h - 14);
   }
 
   document.write('<td class="heure">' + numeroAffiche + '</td>');
@@ -152,7 +152,7 @@ for (let h = 8; h <= 18; h++) {
 
 <div class="notes-container">
   <label for="reservations-notes">📝 Notes & Numéros de réservation :</label>
-  <textarea id="reservations-notes" placeholder="Exemple : Code 100 le 10 Avril - N°001 (M. Durand)..."></textarea>
+  <textarea id="reservations-notes" placeholder="Exemple : Chambre 105 le 12 Avril..."></textarea>
 </div>
 
 </body>
